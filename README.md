@@ -12,4 +12,4 @@ Las imágenes son de Pinterest.
 
 EMAIL DE LOGGIN:
 pruebaprogramacion518@gmail.com
-1234
+123456
