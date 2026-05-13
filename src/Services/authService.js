@@ -29,43 +29,49 @@ export async function login({ email, password }) {
 };
 
 export async function register({ email, password, name }) {
-    const response_http = await fetch(
-        `${ENVIRONMENT.API_URL}/api/auth/register`,
-        {
+    const url = `${ENVIRONMENT.API_URL}/api/auth/register`;
+    try {
+        const response_http = await fetch(url, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ email, password, name })
-        }
-    );
+        });
 
-    const response = await response_http.json();
-    
-    if (!response_http.ok) {
-        throw new Error(response.message || response_http.statusText || 'Error al registrarse');
+        const response = await response_http.json();
+
+        if (!response_http.ok) {
+            throw new Error(response.message || `Error ${response_http.status}: ${response_http.statusText}`);
+        }
+
+        return response;
+    } catch (error) {
+        console.error('Register fetch error:', error);
+        throw error;
     }
-    
-    return response
 };
 
 export async function resetPasswordRequest({ email }) {
-    const response_http = await fetch(
-        `${ENVIRONMENT.API_URL}/api/auth/reset-password-request`,
-        {
+    const url = `${ENVIRONMENT.API_URL}/api/auth/reset-password-request`;
+    try {
+        const response_http = await fetch(url, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ email })
-        }
-    );
+        });
 
-    const response = await response_http.json();
-    
-    if (!response_http.ok) {
-        throw new Error(response.message || response_http.statusText || 'Error al enviar solicitud');
+        const response = await response_http.json();
+
+        if (!response_http.ok) {
+            throw new Error(response.message || `Error ${response_http.status}: ${response_http.statusText}`);
+        }
+
+        return response;
+    } catch (error) {
+        console.error('Reset password request fetch error:', error);
+        throw error;
     }
-    
-    return response
 };
