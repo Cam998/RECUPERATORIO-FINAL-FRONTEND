@@ -3,6 +3,7 @@ import useRequest from '../../Hooks/useRequest';
 import useForm from '../../Hooks/useForm';
 import { register } from '../../Services/authService';
 import { AlertContext } from '../../Context/AlertContext';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import '../login-register-modal.css';
 
 const RegisterModal = ({ onSwitchToLogin, setIsOpen }) => {
@@ -11,6 +12,7 @@ const RegisterModal = ({ onSwitchToLogin, setIsOpen }) => {
         response,
         error
     } = useRequest();
+    const [showPassword, setShowPassword] = React.useState(false);
     const { showAlert } = useContext(AlertContext);
     const REGISTER_FORM_FIELDS = {
         EMAIL: 'email',
@@ -70,7 +72,12 @@ const RegisterModal = ({ onSwitchToLogin, setIsOpen }) => {
                     </div>
                     <div className='form-control'>
                         <label htmlFor=''>Contraseña</label>
-                        <input type='password' id='contraseña' className='input' name={REGISTER_FORM_FIELDS.PASSWORD} onChange={handleChangeInput} value={formState[REGISTER_FORM_FIELDS.PASSWORD]} required />
+                        <div className='password-wrapper'>
+                            <input type={showPassword ? 'text' : 'password'} id='contraseña' className='input' name={REGISTER_FORM_FIELDS.PASSWORD} onChange={handleChangeInput} value={formState[REGISTER_FORM_FIELDS.PASSWORD]} required />
+                            <span className='login-eye-icon' onClick={() => setShowPassword(!showPassword)} onMouseDown={(e) => e.preventDefault()}>
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </span>
+                        </div>
                     </div>
                     <button type='submit'>Registrarse</button>
                 </form>
